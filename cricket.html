@@ -21,7 +21,6 @@
       margin-right: 20px;
       background-color: yellow;
       font-size: 50px;
-      
     }
   </style>
   <title>Cricket Game</title>
@@ -48,7 +47,25 @@
     showResult('Stump', computerChoice, resultMsg);
   ">Stump</button>
 
+  <button onclick="localStorage.clear();
+  resetScore(scoreStr)">Reset</button>
+
   <script>
+    let scoreStr = localStorage.getItem('Score');
+    let score;
+    resetScore (scoreStr);
+
+    function resetScore(scoreStr) {
+      score = scoreStr ? JSON.parse(scoreStr) : {
+      win: 0, 
+      lost: 0,
+      tie: 0,
+    };
+    score.displayScore = function(){
+        return `Won:${score.win}, Lost:${score.lost}, Tie: ${score.tie}.`;
+      };
+    }
+    
     function generateComputerChoice() {
       let randomNumber = Math.random()*3;
       if (randomNumber > 0 && randomNumber <= 1) {
@@ -64,38 +81,52 @@
       
       if(userMove === 'Bat') {
         if(computerMove ==='Ball') {
+          score.win ++;
           return 'YOU WON';
         } else if (computerMove === 'Bat') {
+          score.tie ++;
           return 'Match Tie';
         } else {
+          score.lost ++;
           return 'YOU LOST';
         }
       } 
         
       else if(userMove === 'Ball') {
         if(computerMove ==='Stump') {
+          score.win ++;
           return 'YOU WON';
         } else if (computerMove === 'Ball') {
+          score.tie ++;
           return 'Match Tie';
         } else {
+          score.lost ++;
           return 'YOU LOST';
         }
       } 
         
       else {
         if(computerMove ==='Bat') {
+          score.win ++;
           return 'YOU WON';
         }else if (computerMove === 'Stump') {
+          score.tie ++;
             return 'Match Tie';
         } else {
+          score.lost ++;
           return 'YOU LOST';
         }
       }
     }
 
     function showResult(userMove, computerMove, result) {
-      alert(`You have chosen ${userMove}. Computer choice is ${computerMove} and ${result}.`);
+      localStorage.setItem('Score', JSON.stringify(score));
+      alert(`You have chosen ${userMove}. Computer choice is ${computerMove}
+      
+      ${result}
+      ${score.displayScore()}`);
     }
+
   </script>
 
 </body>
