@@ -3,57 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <style>
-    body{
-      text-align: center;
-    }
-    h1{
-      border: 5px solid black;
-      border-radius: 10%;
-      color: yellow;
-      background-color: brown;
-    }
-    button {
-      border: 7px dashed brown;
-      border-radius: 50%;
-      padding: 10%;
-      margin-right: 20px;
-      background-color: yellow;
-      font-size: 50px;
-    }
-  </style>
   <title>Cricket Game</title>
+  <link rel="stylesheet" href="cricket.css">
 </head>
 <body>
   
   <h1>Bat Ball Stump Game</h1>
   
-  <button onclick=" 
+  <button class = "choice-button"  onclick=" 
     let computerChoice= generateComputerChoice();
     let resultMsg = getResult('Bat', computerChoice);
     showResult('Bat', computerChoice, resultMsg);
-  ">Bat</button>
+  ">
+    <img src="images/bat.png" alt="Bat Image" class="choice-image">
+  </button>
 
-  <button onclick="
+  <button class = "choice-button" onclick="
     computerChoice= generateComputerChoice();
     resultMsg = getResult('Ball', computerChoice);
     showResult('Ball', computerChoice, resultMsg);
-  ">Ball</button>
+  ">
+    <img src="images/ball.png" alt="Ball Image" class="choice-image">
+  </button>
 
-  <button onclick="
+  <button class = "choice-button" onclick="
     computerChoice= generateComputerChoice();
     resultMsg = getResult('Stump', computerChoice);
     showResult('Stump', computerChoice, resultMsg);
-  ">Stump</button>
+  ">
+    <img src="images/stump.png" alt="Stump Image" class="choice-image">
+  </button>
 
-  <button onclick="localStorage.clear();
-  resetScore(scoreStr)">Reset</button>
+  <h3 id = "user-move"></h3>
+  <h3 id = "computer-move"></h3>
+  <h3 id = "result"></h3>
+  <h3 id = "score"></h3>
+
+  <button class= "reset-button" onclick="localStorage.clear();
+  resetScore();
+  ">Reset</button>
 
   <script>
     let scoreStr = localStorage.getItem('Score');
     let score;
-    resetScore (scoreStr);
+    resetScore(scoreStr);
 
     function resetScore(scoreStr) {
       score = scoreStr ? JSON.parse(scoreStr) : {
@@ -62,8 +55,9 @@
       tie: 0,
     };
     score.displayScore = function(){
-        return `Won:${score.win}, Lost:${score.lost}, Tie: ${score.tie}.`;
+        return `Score: Won:${score.win}, Lost:${score.lost}, Tie: ${score.tie}.`;
       };
+      showResult();
     }
     
     function generateComputerChoice() {
@@ -121,10 +115,12 @@
 
     function showResult(userMove, computerMove, result) {
       localStorage.setItem('Score', JSON.stringify(score));
-      alert(`You have chosen ${userMove}. Computer choice is ${computerMove}
-      
-      ${result}
-      ${score.displayScore()}`);
+      document.querySelector('#user-move').innerText = userMove !== undefined ? `You have chosen ${userMove}` : ''; 
+      document.querySelector('#computer-move').innerText = computerMove !== undefined ? `Computer choice is ${computerMove}` : '';
+
+      document.querySelector('#result').innerText = result ||'';
+
+      document.querySelector('#score').innerText = score.displayScore();
     }
 
   </script>

@@ -1,0 +1,38 @@
+body{
+  text-align: center;
+}
+.choice-button {
+  height: 100px;
+  width: 100px;
+  border: none;
+  margin: 10px;
+  background-color: rgb(171, 234, 127);
+  border-radius: 25%;
+  cursor: pointer;
+}
+
+.choice-button:hover {
+  background-color: green;
+}
+
+.choice-image {
+  height: 75px;
+}
+
+.reset-button {
+  background-color: yellowgreen;
+  height: 30px;
+  width: 100px;
+  font-size: large;
+  border-radius: 20px
+}
+
+.reset-button:hover {
+  background-color: green;
+}
+
+
+
+
+
+    
